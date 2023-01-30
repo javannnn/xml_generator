@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-def generate_xml(invoice_data):
+def generate_xml(invoice_data, file_path):
     root = ET.Element("Invoice")
 
     customer = ET.SubElement(root, "Customer")
@@ -19,7 +19,8 @@ def generate_xml(invoice_data):
     total = ET.SubElement(root, "Total").text = str(invoice_data["total"])
     date = ET.SubElement(root, "Date").text = invoice_data["date"]
 
-    return ET.tostring(root, encoding="unicode")
+    tree = ET.ElementTree(root)
+    tree.write(file_path)
 
 # Example usage
 invoice_data = {
@@ -45,5 +46,5 @@ invoice_data = {
     "date": "2023-01-27"
 }
 
-xml = generate_xml(invoice_data)
-print(xml)
+file_path = "C:/my_xml_files/invoice.xml"
+generate_xml(invoice_data, file_path)
